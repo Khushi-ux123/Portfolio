@@ -1,4 +1,4 @@
-View Porfolio: https://khushi-sharma-portfolio-978813914012.asia-southeast1.run.app/
+View Portfolio: https://khushi-sharma-portfolio-978813914012.asia-southeast1.run.app/
 
 ## Run Locally
 
