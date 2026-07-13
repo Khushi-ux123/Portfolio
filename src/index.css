@@ -42,3 +42,228 @@ body {
   animation: scanner 4s ease-in-out infinite;
 }
 
+/* ═════════════════════════════════════════════════════════════
+   RESPONSIVE DESIGN FOR THE HERO SECTION (SINGLE SLIDE VIEW)
+   ═════════════════════════════════════════════════════════════ */
+
+/* Default Desktop/Tablet sizing for large screens (width >= 1024px) */
+@media (min-width: 1024px) {
+  .hero-section {
+    height: 100vh !important;
+    min-height: 600px !important;
+    overflow: hidden !important;
+  }
+  .hero-3d-container {
+    transform: scale(0.95) !important; /* Reverted to elegant, non-overflowing desktop scale */
+    transform-origin: center !important;
+  }
+}
+
+/* Low height screens (Desktop or Laptop under 820px high) */
+@media (max-height: 820px) {
+  .hero-section {
+    height: 100vh !important;
+    min-height: 480px !important;
+    padding-top: 4.5rem !important;
+    padding-bottom: 2rem !important;
+  }
+  .hero-left-col {
+    gap: 0.5rem !important;
+  }
+  .hero-left-col > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0.75rem !important;
+    margin-bottom: 0px !important;
+  }
+  .hero-intro-card {
+    margin-top: 0px !important;
+  }
+  .hero-intro-card > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0.35rem !important;
+    margin-bottom: 0px !important;
+  }
+  .hero-intro-card h3 {
+    font-size: 1.3rem !important;
+    margin-bottom: 0px !important;
+  }
+  .hero-intro-card p {
+    font-size: 0.85rem !important;
+    line-height: 1.4 !important;
+  }
+  .hero-role-badge {
+    margin-top: 0px !important;
+    padding-top: 0px !important;
+  }
+  .hero-cta-buttons {
+    margin-top: 0px !important;
+    padding-top: 0.5rem !important;
+    gap: 0.75rem !important;
+    margin-bottom: 1.5rem !important; /* Spacing after buttons before side image */
+  }
+  .hero-cta-buttons a, 
+  .hero-cta-buttons button {
+    padding-top: 0.6rem !important;
+    padding-bottom: 0.6rem !important;
+    padding-left: 1.25rem !important;
+    padding-right: 1.25rem !important;
+    font-size: 11px !important; /* Reverted from 13px */
+  }
+  .hero-3d-container {
+    transform: scale(0.8) !important; /* Reverted scale to fit perfectly without overflow */
+    transform-origin: center !important;
+  }
+  .hero-scroll-indicator {
+    padding-top: 0.25rem !important;
+    padding-bottom: 0.25rem !important;
+    display: flex !important;
+  }
+  .hero-scroll-indicator span {
+    font-size: 8px !important;
+  }
+  .hero-scroll-indicator div {
+    height: 1rem !important;
+    width: 0.75rem !important;
+    padding: 1px !important;
+  }
+}
+
+/* Very Low height screens (under 680px high) */
+@media (max-height: 680px) {
+  .hero-section {
+    min-height: 400px !important;
+    padding-top: 3.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+  .hero-left-col > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0.5rem !important;
+  }
+  .hero-cta-buttons {
+    margin-bottom: 0.75rem !important;
+  }
+  .hero-3d-container {
+    transform: scale(0.68) !important; /* Reverted from 0.75 */
+  }
+  .hero-intro-card h3 {
+    font-size: 1.15rem !important;
+  }
+  .hero-intro-card p {
+    font-size: 0.8rem !important;
+    line-height: 1.35 !important;
+  }
+  .hero-scroll-indicator {
+    display: none !important; /* Hide indicator on very low heights */
+  }
+}
+
+/* Tablet screens (width between 768px and 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero-3d-container {
+    transform: scale(0.68) !important; /* Sized perfectly to fit side-by-side with text on tablet */
+    transform-origin: center !important;
+  }
+}
+
+/* Width-based Responsive styles for Mobile (width < 768px) */
+@media (max-width: 767px) {
+  .hero-section {
+    height: 100vh !important;
+    min-height: auto !important;
+    overflow: hidden !important;
+    padding-top: 4.5rem !important;
+    padding-bottom: 1rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+  }
+  .hero-container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    flex-grow: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    gap: 0.75rem !important;
+    height: calc(100% - 2rem) !important;
+  }
+  .hero-left-col {
+    align-items: center !important;
+    text-align: center !important;
+    gap: 0.5rem !important;
+    width: 100% !important;
+    margin-bottom: 0.5rem !important;
+  }
+  .hero-left-col > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0.5rem !important;
+    margin-bottom: 0px !important;
+  }
+  .hero-intro-card {
+    text-align: center !important;
+    align-items: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .hero-intro-card p {
+    max-width: 280px !important;
+    font-size: 0.8rem !important;
+    line-height: 1.4 !important;
+  }
+  .hero-intro-card h3 {
+    font-size: 1.2rem !important;
+  }
+  .hero-cta-buttons {
+    justify-content: center !important;
+    width: 100% !important;
+    gap: 0.5rem !important;
+    margin-top: 0.5rem !important;
+    padding-top: 0px !important;
+  }
+  .hero-cta-buttons a,
+  .hero-cta-buttons button {
+    padding: 0.5rem 1rem !important; /* Reverted padding */
+    font-size: 10px !important; /* Reverted font size */
+  }
+  .hero-right-col {
+    height: 240px !important; /* Sized beautifully to showcase the image on mobile */
+    min-height: 240px !important;
+    margin-top: 0.5rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: visible !important;
+  }
+  .hero-3d-container {
+    transform: scale(0.72) !important; /* Increased scale for a larger, clearer look on mobile */
+    transform-origin: center !important;
+    margin-top: 0px !important;
+  }
+  .hero-scroll-indicator {
+    display: none !important;
+  }
+}
+
+/* Extra support for small portrait phones */
+@media (max-width: 375px) {
+  .hero-section {
+    padding-top: 4rem !important;
+  }
+  .hero-left-col h3 {
+    font-size: 1.1rem !important;
+  }
+  .hero-left-col p {
+    font-size: 0.75rem !important;
+    max-width: 250px !important;
+  }
+  .hero-cta-buttons a,
+  .hero-cta-buttons button {
+    padding: 0.45rem 0.95rem !important;
+    font-size: 10px !important;
+  }
+  .hero-right-col {
+    height: 200px !important; /* Increased height slightly for small screens */
+    min-height: 200px !important;
+  }
+  .hero-3d-container {
+    transform: scale(0.6) !important; /* Scaled up from 0.42 to look beautiful and clearly visible */
+  }
+}
+
+
