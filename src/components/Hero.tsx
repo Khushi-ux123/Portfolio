@@ -227,7 +227,7 @@ export default function Hero({ isDarkMode }: HeroProps) {
       onMouseMove={handleHeroMouseMove}
       onMouseEnter={() => setIsMouseInHero(true)}
       onMouseLeave={handleHeroMouseLeave}
-      className={`relative h-dvh min-h-[560px] flex flex-col overflow-hidden select-none pt-16 sm:pt-20 lg:pt-24 pb-0 transition-colors duration-300 ${
+      className={`relative h-[100dvh] min-h-0 flex flex-col overflow-hidden select-none pt-10 sm:pt-12 lg:pt-16 pb-0 transition-colors duration-300 ${
         isDarkMode ? "bg-[#050505] text-white" : "bg-slate-50 text-slate-900"
       }`}
     >
@@ -638,8 +638,8 @@ export default function Hero({ isDarkMode }: HeroProps) {
       </div>
 
       {/* ==================== BOTTOM AREA: HORIZONTAL FLOATING TECH STACK ==================== */}
-      {/* Compact on phones, roomier from sm up, full on lg+ */}
-      <div className="relative w-full z-20 flex-shrink-0 bg-[#050505]/60 border-t border-b border-white/[0.04] backdrop-blur-xl py-2 sm:py-2.5 lg:py-4 overflow-hidden">
+      {/* Keep this height small so the whole hero stays within one viewport */}
+      <div className="relative w-full z-20 flex-shrink-0 bg-[#050505]/60 border-t border-b border-white/[0.04] backdrop-blur-xl py-1.5 sm:py-2 lg:py-2.5 overflow-hidden">
         {/* Mirror fades on edges */}
         <div className="absolute inset-y-0 left-0 w-16 lg:w-24 bg-gradient-to-r from-[#050505] to-transparent z-10 pointer-events-none" />
         <div className="absolute inset-y-0 right-0 w-16 lg:w-24 bg-gradient-to-l from-[#050505] to-transparent z-10 pointer-events-none" />
@@ -672,7 +672,8 @@ export default function Hero({ isDarkMode }: HeroProps) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 1.2 }}
-        className="hidden lg:flex relative z-20 flex-shrink-0 py-3 flex-col items-center justify-center gap-1.5 text-center font-mono text-[9px] text-slate-500 tracking-[0.2em] uppercase cursor-pointer"
+        className="hidden lg:flex relative z-20 flex-shrink-0 py-1.5 flex-col items-center justify-center gap-1.5 text-center font-mono text-[9px] text-slate-500 tracking-[0.2em] uppercase cursor-pointer"
+
         onClick={() => {
           const aboutSection = document.getElementById("about");
           if (aboutSection) aboutSection.scrollIntoView({ behavior: "smooth" });
