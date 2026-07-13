@@ -154,10 +154,7 @@ export default function Hero({ isDarkMode }: HeroProps) {
 
   const lines = [
     "Khushi Sharma",
-    "Building",
-    "Intelligent",
-    "Digital",
-    "Experiences"
+    
   ];
 
   const techStack = [
