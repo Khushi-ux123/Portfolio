@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ArrowRight, Code, Brain, Layout, Zap, Sparkles } from "lucide-react";
 import { personalInfo } from "../data";
-import profileAvatar from "../assets/images/khushi_avatar_1783742260987.jpg";
+import profileAvatar from "../assets/images/khushi_avatar_new_1783926606014.jpg";
 
 interface IntroCinematicProps {
   isDarkMode: boolean;
@@ -269,33 +269,6 @@ export default function IntroCinematic({ isDarkMode, onEnter }: IntroCinematicPr
       <div className="absolute top-0 left-0 right-0 p-6 flex justify-between items-center z-20">
         <div className="flex items-center gap-2">
           {/* Cleared system loader indicators as requested to keep UI pristine */}
-        </div>
-
-        {/* Toggle switch with glowing border */}
-        <div className="flex items-center gap-3 bg-slate-950/60 backdrop-blur-md px-4 py-2 rounded-xl border border-slate-800/80">
-          <span className="font-mono text-[10px] sm:text-xs text-slate-300 font-bold tracking-wider">
-            INTRO CINEMATIC
-          </span>
-          <button
-            id="intro-cinematic-toggle"
-            onClick={handleToggle}
-            className={`flex items-center gap-1 px-3 py-1.5 rounded-full border transition-all cursor-pointer ${
-              cinematicEnabled 
-                ? "bg-slate-900/80 border-cyan-500/80 text-cyan-400 shadow-lg shadow-cyan-500/10" 
-                : "bg-slate-900/40 border-slate-700 text-slate-500"
-            }`}
-          >
-            <span className="font-mono text-[9px] font-extrabold mr-1">
-              {cinematicEnabled ? "ON" : "OFF"}
-            </span>
-            <div className={`w-6 h-3 rounded-full relative flex items-center p-0.5 transition-colors duration-300 ${
-              cinematicEnabled ? "bg-cyan-500" : "bg-slate-700"
-            }`}>
-              <div className={`w-2 h-2 rounded-full bg-white transition-transform duration-300 ${
-                cinematicEnabled ? "translate-x-3" : "translate-x-0"
-              }`} />
-            </div>
-          </button>
         </div>
       </div>
 
