@@ -253,7 +253,7 @@ export default function Hero({ isDarkMode }: HeroProps) {
 
       {/* 4. Main Contents Split Grid — this block owns all remaining height */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full flex-1 min-h-0 flex items-center">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center w-full h-full lg:h-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 lg:gap-12 items-center w-full h-full lg:h-auto">
 
           {/* ==================== LEFT SIDE: STORYTELLING ==================== */}
           <div className="lg:col-span-6 flex flex-col justify-center text-left space-y-3 sm:space-y-4 lg:space-y-6 lg:pr-6 min-h-0 w-full">
@@ -342,55 +342,85 @@ export default function Hero({ isDarkMode }: HeroProps) {
               </AnimatePresence>
             </div>
 
-            {/* Magnetic CTA Buttons Section */}
+            {/* Magnetic CTA Buttons Section — all three stay on one line */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1.1 }}
-              className="flex flex-wrap items-center gap-2.5 sm:gap-3 lg:gap-4 pt-1 lg:pt-4"
+              className="flex flex-nowrap items-center gap-1.5 sm:gap-2.5 lg:gap-4 pt-1 lg:pt-4 w-full"
             >
               <MagneticButton
                 id="cta-explore-work"
                 href="#projects"
-                className="px-4 py-2.5 sm:px-5 sm:py-3 lg:px-6 lg:py-3.5 rounded-xl text-[10px] sm:text-xs lg:text-sm font-bold uppercase tracking-wider bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white shadow-[0_0_20px_rgba(99,102,241,0.25)] border border-indigo-400/20 hover:shadow-indigo-500/40"
+                className="flex-1 sm:flex-none px-2.5 py-2 sm:px-5 sm:py-3 lg:px-6 lg:py-3.5 rounded-lg sm:rounded-xl text-[9px] sm:text-xs lg:text-sm font-bold uppercase tracking-wider bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white shadow-[0_0_20px_rgba(99,102,241,0.25)] border border-indigo-400/20 hover:shadow-indigo-500/40 whitespace-nowrap"
               >
-                Explore My Work
-                <ArrowRight size={14} className="text-white group-hover:translate-x-1 transition-transform" />
+                <span className="sm:hidden">Work</span>
+                <span className="hidden sm:inline">Explore My Work</span>
+                <ArrowRight size={14} className="hidden sm:inline text-white group-hover:translate-x-1 transition-transform" />
               </MagneticButton>
 
               <MagneticButton
                 id="cta-download-resume"
                 onClick={handleDownloadResume}
-                className={`px-4 py-2.5 sm:px-5 sm:py-3 lg:px-6 lg:py-3.5 rounded-xl text-[10px] sm:text-xs lg:text-sm font-bold uppercase tracking-wider border shadow-md ${
+                className={`flex-1 sm:flex-none px-2.5 py-2 sm:px-5 sm:py-3 lg:px-6 lg:py-3.5 rounded-lg sm:rounded-xl text-[9px] sm:text-xs lg:text-sm font-bold uppercase tracking-wider border shadow-md whitespace-nowrap ${
                   isDarkMode
                     ? "bg-white/[0.03] hover:bg-white/[0.08] text-white border-white/10 hover:border-white/20"
                     : "bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-200 hover:border-slate-300"
                 }`}
               >
-                <FileText size={14} className={isDarkMode ? "text-slate-400" : "text-slate-600"} />
-                Download Resume
+                <FileText size={14} className={`hidden sm:inline ${isDarkMode ? "text-slate-400" : "text-slate-600"}`} />
+                <span className="sm:hidden">Resume</span>
+                <span className="hidden sm:inline">Download Resume</span>
               </MagneticButton>
 
               <MagneticButton
                 id="cta-lets-connect"
                 href="#contact"
-                className={`px-4 py-2.5 sm:px-5 sm:py-3 lg:px-6 lg:py-3.5 rounded-xl text-[10px] sm:text-xs lg:text-sm font-bold uppercase tracking-wider bg-transparent border shadow-sm ${
+                className={`flex-1 sm:flex-none px-2.5 py-2 sm:px-5 sm:py-3 lg:px-6 lg:py-3.5 rounded-lg sm:rounded-xl text-[9px] sm:text-xs lg:text-sm font-bold uppercase tracking-wider bg-transparent border shadow-sm whitespace-nowrap ${
                   isDarkMode
                     ? "text-indigo-400 hover:text-indigo-300 border-indigo-500/10 hover:border-indigo-500/25"
                     : "text-indigo-600 hover:text-indigo-700 border-indigo-200/50 hover:border-indigo-300/50"
                 }`}
               >
-                <Mail size={14} />
-                Let's Connect
+                <Mail size={14} className="hidden sm:inline" />
+                <span className="sm:hidden">Connect</span>
+                <span className="hidden sm:inline">Let's Connect</span>
               </MagneticButton>
             </motion.div>
 
           </div>
 
           {/* ==================== RIGHT SIDE: FUTURE INTERACTIVE WORKSPACE ==================== */}
-          {/* Simplified terminal-only card below md so mobile stays a single-focus, single-screen layout;
-              the full floating-module scene (which needs real lateral room) only appears at lg+. */}
-          <div className="hidden lg:flex lg:col-span-6 items-center justify-center relative min-h-0 h-full lg:h-auto">
+          {/* Visible at every breakpoint now — a small static status card on mobile,
+              scaling up to the full floating-module 3D scene at lg+. */}
+          <div className="lg:col-span-6 flex items-center justify-center relative min-h-0 h-full lg:h-auto">
+
+            {/* ---- COMPACT CARD (below lg): small, single terminal panel only ---- */}
+            <div className="lg:hidden w-full max-w-[280px] sm:max-w-[320px] mx-auto border border-white/[0.08] bg-[#07070a]/90 backdrop-blur-xl rounded-xl shadow-[0_15px_35px_rgba(0,0,0,0.6)] overflow-hidden font-mono text-[9px] text-slate-300">
+              <div className="px-2.5 py-1.5 border-b border-white/[0.06] bg-white/[0.01] flex items-center justify-between">
+                <div className="flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500/80" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-500/80" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500/80" />
+                </div>
+                <span className="text-[7px] text-slate-500 font-bold uppercase tracking-wider">sharma_core.sh</span>
+                <Terminal size={10} className="text-indigo-400" />
+              </div>
+              <div className="p-2.5 space-y-1.5 text-left leading-relaxed">
+                <div className="flex items-center gap-1.5 text-emerald-400 font-bold">
+                  <Shield size={8} className="animate-pulse flex-shrink-0" />
+                  <span className="truncate">Security: Auth Guard [OK]</span>
+                </div>
+                <div className="flex items-start gap-1.5 text-cyan-400 bg-cyan-950/25 border border-cyan-500/25 p-1.5 rounded-lg text-[8px] animate-pulse">
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-0.5 animate-ping flex-shrink-0" />
+                  <span className="truncate">{activeConsoleLog}</span>
+                </div>
+                <div className="pt-1 border-t border-white/[0.04] text-[7px] text-slate-500 flex items-center justify-between">
+                  <span>PORT: 3000</span>
+                  <span className="text-emerald-500">PING: 18ms</span>
+                </div>
+              </div>
+            </div>
 
             {/* ---- FULL 3D PERSPECTIVE SCENE (lg and up only) ---- */}
             <div className="hidden lg:flex relative w-full max-w-lg aspect-square items-center justify-center [perspective:1400px] scale-100 origin-center">
