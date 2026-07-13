@@ -22,20 +22,9 @@ export default function Education({ isDarkMode }: EducationProps) {
               isDarkMode ? "text-white" : "text-slate-900"
             }`}
           >
-            Academic Education
+            Education
           </motion.h2>
           <div className="h-1.5 w-16 bg-indigo-600 mx-auto rounded-full mb-6" />
-          <motion.p
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className={`text-base font-sans leading-relaxed ${
-              isDarkMode ? "text-slate-400" : "text-slate-650"
-            }`}
-          >
-            Engineering qualification, university credentials, and academic standing.
-          </motion.p>
         </div>
 
         {/* Education Highlight Cards Pile */}
@@ -45,7 +34,7 @@ export default function Education({ isDarkMode }: EducationProps) {
               degree: "Bachelor of Technology in Information Technology",
               institution: "Bhagat Phool Singh Mahila Vishwavidyalaya, Sonipat, Haryana",
               period: "Oct 2022 – May 2026",
-              score: "CGPA: 8.95 (Till 7th Semester)",
+              score: "CGPA: 8.95",
               subjects: ["Algorithms", "SQL & NoSQL Databases", "Computer Networks", "OOP in Java", "Operating Systems", "DSA"],
             },
             {
@@ -101,7 +90,7 @@ export default function Education({ isDarkMode }: EducationProps) {
 
                   <div className="flex flex-wrap gap-4 pt-1">
                     {/* Period */}
-                    <div className="flex items-center gap-2 text-sm text-slate-505 dark:text-slate-400 font-sans">
+                    <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 font-sans">
                       <Calendar size={16} className="text-slate-400 flex-shrink-0" />
                       <span>{school.period}</span>
                     </div>
@@ -128,7 +117,7 @@ export default function Education({ isDarkMode }: EducationProps) {
                           className={`text-xs px-2.5 py-1.5 rounded-lg border font-mono ${
                             isDarkMode
                               ? "bg-slate-950 border-slate-800 text-slate-400 hover:text-white"
-                              : "bg-slate-50 border-slate-200 text-slate-650 hover:bg-indigo-50 hover:border-indigo-100"
+                              : "bg-slate-50 border-slate-200 text-slate-600 hover:bg-indigo-50 hover:border-indigo-200"
                           }`}
                         >
                           {subject}

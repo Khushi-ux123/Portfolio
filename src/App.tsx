@@ -18,11 +18,14 @@ import Footer from "./components/Footer";
 import PrintResume from "./components/PrintResume";
 import ScrollToTop from "./components/ScrollToTop";
 import SkeletonLoader from "./components/SkeletonLoader";
+import InteractiveBackground from "./components/InteractiveBackground";
+import IntroCinematic from "./components/IntroCinematic";
 
 export default function App() {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [isPrintView, setIsPrintView] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [showIntro, setShowIntro] = useState(true);
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -90,31 +93,36 @@ export default function App() {
   return (
     <div
       id="portfolio-root"
-      className={`min-h-screen transition-colors duration-300 font-sans selection:bg-indigo-505 selection:text-white ${
+      className={`min-h-screen transition-colors duration-300 font-sans selection:bg-indigo-500 selection:text-white relative overflow-hidden ${
         isDarkMode ? "bg-slate-950 text-slate-100" : "bg-slate-50 text-slate-900"
       }`}
     >
-      <title>Khushi Sharma | Frontend Developer & IT Engineer Portfolio</title>
-      <meta name="description" content="Explore the portfolio of Khushi Sharma, B.Tech IT Graduate & Frontend Developer Intern. Featuring projects like Mindwell AI, SignBridge AI, and scalable React and Angular web systems." />
-      <meta name="keywords" content="Khushi Sharma, Portfolio, Frontend Developer, B.Tech IT, Angular, React, Software Engineer, Palwal, Haryana, Mindwell AI, SignBridge AI, Web Developer" />
+      {/* 1. Global Interactive Constellation Background */}
+      <InteractiveBackground isDarkMode={isDarkMode} />
+
+      <title>Khushi Sharma | Full-Stack Developer Portfolio</title>
+      <meta name="description" content="Explore the portfolio of Khushi Sharma, B.Tech IT Graduate & Full-Stack Developer. Featuring projects like Mindwell AI, SignBridge AI, and scalable React and Node web systems." />
+      <meta name="keywords" content="Khushi Sharma, Portfolio, Full-Stack Developer, B.Tech IT, Angular, React, Node.js, Software Engineer, Palwal, Haryana, Mindwell AI, SignBridge AI, Web Developer" />
       
       {/* OpenGraph Tags */}
       <meta property="og:type" content="website" />
-      <meta property="og:title" content="Khushi Sharma | Frontend Developer & IT Engineer Portfolio" />
-      <meta property="og:description" content="Explore dynamic IT projects, professional internships, and skills in React, Angular, TypeScript, and Java." />
+      <meta property="og:title" content="Khushi Sharma | Full-Stack Developer Portfolio" />
+      <meta property="og:description" content="Explore dynamic full-stack projects, professional internships, and skills in React, Node, Angular, TypeScript, and Java." />
       <meta property="og:site_name" content="Khushi Sharma Portfolio" />
       
       {/* Twitter Tags */}
       <meta name="twitter:card" content="summary" />
-      <meta name="twitter:title" content="Khushi Sharma | Frontend Developer & IT Engineer Portfolio" />
-      <meta name="twitter:description" content="Explore dynamic IT projects, professional internships, and skills in React, Angular, TypeScript, and Java." />
+      <meta name="twitter:title" content="Khushi Sharma | Full-Stack Developer Portfolio" />
+      <meta name="twitter:description" content="Explore dynamic full-stack projects, professional internships, and skills in React, Node, Angular, TypeScript, and Java." />
 
       {/* High-fidelity PDF-replica resume layout - visible strictly during browser print */}
       <PrintResume />
 
       {/* Main interactive application - nested under print:hidden to hide website decorations when printing */}
       <div className="print:hidden">
-        {isLoading ? (
+        {showIntro ? (
+          <IntroCinematic isDarkMode={isDarkMode} onEnter={() => setShowIntro(false)} />
+        ) : isLoading ? (
           <SkeletonLoader isDarkMode={isDarkMode} />
         ) : (
           <motion.div
@@ -155,7 +163,7 @@ export default function App() {
 
               {/* Section Break Divider */}
               <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8`}>
-                <div className={`h-px ${isDarkMode ? "bg-slate-905" : "bg-slate-200"}`} />
+                <div className={`h-px ${isDarkMode ? "bg-slate-900" : "bg-slate-200"}`} />
               </div>
 
               {/* Experience Section */}

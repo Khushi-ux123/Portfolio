@@ -18,7 +18,7 @@ export default function Footer({ isDarkMode }: FooterProps) {
       className={`border-t py-12 transition-all duration-300 ${
         isDarkMode
           ? "bg-slate-950 border-slate-900 text-slate-400"
-          : "bg-slate-50 border-slate-200 text-slate-605"
+          : "bg-slate-50 border-slate-200 text-slate-600"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -56,7 +56,7 @@ export default function Footer({ isDarkMode }: FooterProps) {
                 referrerPolicy="no-referrer"
                 rel="noopener noreferrer"
                 className={`p-2 rounded-lg transition-colors ${
-                  isDarkMode ? "text-slate-400 hover:text-white hover:bg-slate-900" : "text-slate-550 hover:text-slate-900 hover:bg-slate-200"
+                  isDarkMode ? "text-slate-400 hover:text-white hover:bg-slate-900" : "text-slate-500 hover:text-slate-900 hover:bg-slate-200"
                 }`}
                 aria-label="GitHub-Profile"
               >
@@ -69,7 +69,7 @@ export default function Footer({ isDarkMode }: FooterProps) {
                 referrerPolicy="no-referrer"
                 rel="noopener noreferrer"
                 className={`p-2 rounded-lg transition-colors ${
-                  isDarkMode ? "text-slate-400 hover:text-white hover:bg-slate-900" : "text-slate-550 hover:text-indigo-600 hover:bg-slate-200"
+                  isDarkMode ? "text-slate-400 hover:text-white hover:bg-slate-900" : "text-slate-500 hover:text-indigo-600 hover:bg-slate-200"
                 }`}
                 aria-label="LinkedIn-Profile"
               >
@@ -79,7 +79,7 @@ export default function Footer({ isDarkMode }: FooterProps) {
                 id="footer-email"
                 href={`mailto:${personalInfo.email}`}
                 className={`p-2 rounded-lg transition-colors ${
-                  isDarkMode ? "text-slate-400 hover:text-white hover:bg-slate-900" : "text-slate-550 hover:text-indigo-600 hover:bg-slate-200"
+                  isDarkMode ? "text-slate-400 hover:text-white hover:bg-slate-900" : "text-slate-500 hover:text-indigo-600 hover:bg-slate-200"
                 }`}
                 aria-label="Email-Contact"
               >

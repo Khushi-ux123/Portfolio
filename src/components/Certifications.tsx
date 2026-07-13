@@ -33,20 +33,9 @@ export default function Certifications({ isDarkMode }: CertificationsProps) {
               isDarkMode ? "text-white" : "text-slate-900"
             }`}
           >
-            Technical Certifications
+            Certifications
           </motion.h2>
           <div className="h-1.5 w-16 bg-indigo-600 mx-auto rounded-full mb-6" />
-          <motion.p
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className={`text-base font-sans leading-relaxed ${
-              isDarkMode ? "text-slate-400" : "text-slate-650"
-            }`}
-          >
-            Verified technical certifications, cybersecurity modules, and programming qualifications.
-          </motion.p>
         </div>
 
         {/* Certifications Grid */}
@@ -61,12 +50,12 @@ export default function Certifications({ isDarkMode }: CertificationsProps) {
               transition={{ duration: 0.5, delay: idx * 0.05 }}
               className={`p-6 rounded-2xl border flex items-start gap-4 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 ${
                 isDarkMode
-                  ? "bg-slate-900/40 border-slate-800/85 hover:bg-slate-900 hover:border-indigo-505/30"
-                  : "bg-white border-slate-200 hover:bg-slate-55 hover:border-indigo-505/20"
+                  ? "bg-slate-900/40 border-slate-800 hover:bg-slate-900 hover:border-indigo-500/30"
+                  : "bg-white border-slate-200 hover:bg-slate-50 hover:border-indigo-500/20"
               }`}
             >
               {/* Badge Icon */}
-              <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-850 flex-shrink-0">
+              <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-800 flex-shrink-0">
                 {getCertIcon(idx)}
               </div>
 

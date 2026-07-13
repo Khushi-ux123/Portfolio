@@ -36,7 +36,7 @@ export default function ScrollToTop() {
           exit={{ opacity: 0, scale: 0.8, y: 20 }}
           transition={{ duration: 0.3 }}
           onClick={scrollToTop}
-          className="fixed bottom-6 right-6 z-50 p-3.5 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white shadow-xl shadow-indigo-600/30 hover:shadow-indigo-600/50 cursor-pointer flex items-center justify-center border border-indigo-500/20 hover:-translate-y-1 transition-transform"
+          className="fixed bottom-24 right-6 z-50 p-3.5 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white shadow-xl shadow-indigo-600/30 hover:shadow-indigo-600/50 cursor-pointer flex items-center justify-center border border-indigo-500/20 hover:-translate-y-1 transition-transform"
           aria-label="Scroll to top"
           title="Scroll back to top"
         >

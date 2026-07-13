@@ -6,6 +6,12 @@ export interface Project {
   liveUrl?: string;
   githubUrl?: string;
   imageUrl: string;
+  overview?: string;
+  problem?: string;
+  solution?: string;
+  features?: string[];
+  architecture?: string;
+  challenges?: string;
 }
 
 export interface Experience {

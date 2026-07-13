@@ -25,3 +25,20 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
+
+@keyframes scanner {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(24rem);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.animate-scanner {
+  animation: scanner 4s ease-in-out infinite;
+}
+

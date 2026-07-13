@@ -4,6 +4,32 @@ import { Mail, Linkedin, Github, Send, CheckCircle2, AlertCircle, MapPin, Messag
 import { personalInfo } from "../data";
 import { ContactMessage } from "../types";
 
+// Safe localStorage helper to prevent SecurityError exceptions in sandboxed iframes
+const safeLocalStorage = {
+  getItem: (key: string): string | null => {
+    try {
+      return localStorage.getItem(key);
+    } catch (e) {
+      console.warn("Storage access denied:", e);
+      return null;
+    }
+  },
+  setItem: (key: string, value: string): void => {
+    try {
+      localStorage.setItem(key, value);
+    } catch (e) {
+      console.warn("Storage write denied:", e);
+    }
+  },
+  removeItem: (key: string): void => {
+    try {
+      localStorage.removeItem(key);
+    } catch (e) {
+      console.warn("Storage remove denied:", e);
+    }
+  }
+};
+
 interface ContactProps {
   isDarkMode: boolean;
 }
@@ -21,7 +47,7 @@ export default function Contact({ isDarkMode }: ContactProps) {
   // Load sent messages on mount to show local persistence
   useEffect(() => {
     try {
-      const stored = localStorage.getItem("khushi_portfolio_messages");
+      const stored = safeLocalStorage.getItem("khushi_portfolio_messages");
       if (stored) {
         setSentMessages(JSON.parse(stored));
       }
@@ -88,7 +114,7 @@ export default function Contact({ isDarkMode }: ContactProps) {
         const updated = [newMessage, ...sentMessages];
         setSentMessages(updated);
         try {
-          localStorage.setItem("khushi_portfolio_messages", JSON.stringify(updated));
+          safeLocalStorage.setItem("khushi_portfolio_messages", JSON.stringify(updated));
         } catch (err) {
           console.error("Error writing to localStorage", err);
         }
@@ -105,7 +131,7 @@ export default function Contact({ isDarkMode }: ContactProps) {
 
   const handleClearMessages = () => {
     setSentMessages([]);
-    localStorage.removeItem("khushi_portfolio_messages");
+    safeLocalStorage.removeItem("khushi_portfolio_messages");
   };
 
   return (
@@ -122,20 +148,9 @@ export default function Contact({ isDarkMode }: ContactProps) {
               isDarkMode ? "text-white" : "text-slate-900"
             }`}
           >
-            Get In Touch
+            Contact
           </motion.h2>
           <div className="h-1.5 w-16 bg-indigo-600 mx-auto rounded-full mb-6" />
-          <motion.p
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className={`text-base font-sans leading-relaxed ${
-              isDarkMode ? "text-slate-400" : "text-slate-650"
-            }`}
-          >
-            Have an open role, an exciting project, or simply want to connect? Drop a message below!
-          </motion.p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
@@ -165,7 +180,7 @@ export default function Contact({ isDarkMode }: ContactProps) {
               <div className="space-y-6">
                 {/* Location */}
                 <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-xl bg-indigo-55 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 flex-shrink-0">
+                  <div className="p-3 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 flex-shrink-0">
                     <MapPin size={20} />
                   </div>
                   <div>
@@ -182,12 +197,12 @@ export default function Contact({ isDarkMode }: ContactProps) {
                   href="tel:+919053273309"
                   className="flex items-start gap-4 group cursor-pointer"
                 >
-                  <div className="p-3 rounded-xl bg-indigo-55 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 flex-shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                  <div className="p-3 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 flex-shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
                     <Phone size={20} />
                   </div>
                   <div>
                     <p className="text-xs font-mono uppercase tracking-wider text-slate-500 font-bold">Phone</p>
-                    <p className="text-sm sm:text-base font-semibold text-indigo-600 dark:text-indigo-455 group-hover:underline">
+                    <p className="text-sm sm:text-base font-semibold text-indigo-600 dark:text-indigo-400 group-hover:underline">
                       +91 9053273309
                     </p>
                   </div>
@@ -199,12 +214,12 @@ export default function Contact({ isDarkMode }: ContactProps) {
                   href={`mailto:${personalInfo.email}`}
                   className="flex items-start gap-4 group cursor-pointer"
                 >
-                  <div className="p-3 rounded-xl bg-indigo-55 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 flex-shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                  <div className="p-3 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 flex-shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
                     <Mail size={20} />
                   </div>
                   <div>
                     <p className="text-xs font-mono uppercase tracking-wider text-slate-500 font-bold">Email</p>
-                    <p className="text-sm sm:text-base font-semibold text-indigo-600 dark:text-indigo-450 group-hover:underline">
+                    <p className="text-sm sm:text-base font-semibold text-indigo-600 dark:text-indigo-400 group-hover:underline">
                       {personalInfo.email}
                     </p>
                   </div>
@@ -219,12 +234,12 @@ export default function Contact({ isDarkMode }: ContactProps) {
                   rel="noopener noreferrer"
                   className="flex items-start gap-4 group"
                 >
-                  <div className="p-3 rounded-xl bg-indigo-55 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 flex-shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                  <div className="p-3 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 flex-shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
                     <Linkedin size={20} />
                   </div>
                   <div>
                     <p className="text-xs font-mono uppercase tracking-wider text-slate-500 font-bold">LinkedIn</p>
-                    <p className="text-sm sm:text-base font-semibold text-indigo-600 dark:text-indigo-450 group-hover:underline break-all">
+                    <p className="text-sm sm:text-base font-semibold text-indigo-600 dark:text-indigo-400 group-hover:underline break-all">
                       linkedin.com/in/khushi-sharma-45215a399
                     </p>
                   </div>
@@ -239,12 +254,12 @@ export default function Contact({ isDarkMode }: ContactProps) {
                   rel="noopener noreferrer"
                   className="flex items-start gap-4 group"
                 >
-                  <div className="p-3 rounded-xl bg-indigo-55 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 flex-shrink-0 group-hover:bg-slate-900 group-hover:text-white transition-colors">
+                  <div className="p-3 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 flex-shrink-0 group-hover:bg-slate-900 group-hover:text-white transition-colors">
                     <Github size={20} />
                   </div>
                   <div>
                     <p className="text-xs font-mono uppercase tracking-wider text-slate-500 font-bold">GitHub</p>
-                    <p className="text-sm sm:text-base font-semibold text-slate-650 dark:text-slate-400 group-hover:underline">
+                    <p className="text-sm sm:text-base font-semibold text-slate-600 dark:text-slate-400 group-hover:underline">
                       github.com/Khushi-ux123
                     </p>
                   </div>
@@ -262,7 +277,7 @@ export default function Contact({ isDarkMode }: ContactProps) {
                 }`}
               >
                 <div className="flex items-center justify-between mb-4">
-                  <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-440 flex items-center gap-1.5">
+                  <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 flex items-center gap-1.5">
                     <MessageSquare size={16} />
                     Messages Sent locally ({sentMessages.length})
                   </h4>
@@ -279,14 +294,14 @@ export default function Contact({ isDarkMode }: ContactProps) {
                     <div
                       key={msg.id}
                       className={`p-3.5 rounded-xl border text-xs font-sans ${
-                        isDarkMode ? "bg-slate-950 border-slate-850" : "bg-white border-slate-150"
+                        isDarkMode ? "bg-slate-950 border-slate-800" : "bg-white border-slate-200"
                       }`}
                     >
                       <div className="flex justify-between items-center mb-1.5">
                         <span className="font-bold">{msg.name}</span>
-                        <span className="text-[10px] font-mono text-slate-450">{msg.timestamp}</span>
+                        <span className="text-[10px] font-mono text-slate-400">{msg.timestamp}</span>
                       </div>
-                      <p className={`italic italic-lead line-clamp-2 ${isDarkMode ? "text-slate-350" : "text-slate-650"}`}>
+                      <p className={`italic italic-lead line-clamp-2 ${isDarkMode ? "text-slate-300" : "text-slate-600"}`}>
                         "{msg.message}"
                       </p>
                     </div>
@@ -309,7 +324,7 @@ export default function Contact({ isDarkMode }: ContactProps) {
               onSubmit={handleSubmit}
               className={`p-6 sm:p-8 rounded-2xl border space-y-5 transition-all duration-300 ${
                 isDarkMode
-                  ? "bg-slate-900/60 border-slate-850 shadow-xl"
+                  ? "bg-slate-900/60 border-slate-800 shadow-xl"
                   : "bg-white border-slate-200 shadow-lg shadow-slate-200/10"
               }`}
             >
@@ -357,7 +372,7 @@ export default function Contact({ isDarkMode }: ContactProps) {
                     className={`w-full px-4 py-3 rounded-xl border font-sans text-sm outline-none transition-colors ${
                       isDarkMode
                         ? "bg-slate-950 border-slate-800 text-white focus:border-indigo-500"
-                        : "bg-slate-50 border-slate-200 text-slate-850 focus:border-indigo-500 focus:bg-white"
+                        : "bg-slate-50 border-slate-200 text-slate-800 focus:border-indigo-500 focus:bg-white"
                     }`}
                     disabled={status === "sending"}
                     required
@@ -383,7 +398,7 @@ export default function Contact({ isDarkMode }: ContactProps) {
                     className={`w-full px-4 py-3 rounded-xl border font-sans text-sm outline-none transition-colors ${
                       isDarkMode
                         ? "bg-slate-950 border-slate-800 text-white focus:border-indigo-500"
-                        : "bg-slate-50 border-slate-200 text-slate-850 focus:border-indigo-500 focus:bg-white"
+                        : "bg-slate-50 border-slate-200 text-slate-800 focus:border-indigo-500 focus:bg-white"
                     }`}
                     disabled={status === "sending"}
                     required
@@ -409,7 +424,7 @@ export default function Contact({ isDarkMode }: ContactProps) {
                     className={`w-full px-4 py-3 rounded-xl border font-sans text-sm outline-none resize-none transition-colors ${
                       isDarkMode
                         ? "bg-slate-950 border-slate-800 text-white focus:border-indigo-500"
-                        : "bg-slate-50 border-slate-200 text-slate-850 focus:border-indigo-500 focus:bg-white"
+                        : "bg-slate-50 border-slate-200 text-slate-800 focus:border-indigo-500 focus:bg-white"
                     }`}
                     disabled={status === "sending"}
                     required
