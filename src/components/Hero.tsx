@@ -51,7 +51,7 @@ function MagneticButton({
     const rect = containerRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left - rect.width / 2;
     const y = e.clientY - rect.top - rect.height / 2;
-
+    
     // Smooth magnetic pull strength
     const pullFactor = 0.35;
     setPosition({ x: x * pullFactor, y: y * pullFactor });
@@ -66,7 +66,7 @@ function MagneticButton({
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     const newRipple = { id: Date.now(), x, y };
-
+    
     setRipples((prev) => [...prev, newRipple]);
     setTimeout(() => {
       setRipples((prev) => prev.filter((r) => r.id !== newRipple.id));
@@ -91,7 +91,7 @@ function MagneticButton({
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl pointer-events-none"
         style={{ background: `radial-gradient(circle, ${glowColor} 0%, transparent 70%)` }}
       />
-
+      
       {/* Click Ripples */}
       {ripples.map((r) => (
         <span
@@ -106,7 +106,7 @@ function MagneticButton({
           }}
         />
       ))}
-
+      
       {/* Text wrapper */}
       <span className="relative z-10 flex items-center justify-center gap-2">
         {children}
@@ -138,6 +138,7 @@ function MagneticButton({
 export default function Hero({ isDarkMode }: HeroProps) {
   const [roleIdx, setRoleIdx] = useState(0);
   const [sceneRotation, setSceneRotation] = useState({ x: 0, y: 0 });
+  const [scrollOpacity, setScrollOpacity] = useState(1);
   const [mouseCoords, setMouseCoords] = useState({ x: -100, y: -100 });
   const [isMouseInHero, setIsMouseInHero] = useState(false);
   const [activeConsoleLog, setActiveConsoleLog] = useState<string>("Portfolio ready.");
@@ -151,10 +152,12 @@ export default function Hero({ isDarkMode }: HeroProps) {
     "Continuous Learner"
   ];
 
-  const lines = ["Khushi Sharma"];
+  const lines = [
+    "Khushi Sharma"
+  ];
 
   const techStack = [
-    "React", "Next.js", "TypeScript", "Node.js", "MongoDB",
+    "React", "Next.js", "TypeScript", "Node.js", "MongoDB", 
     "Python", "Java", "Express", "Git", "Firebase"
   ];
 
@@ -187,15 +190,25 @@ export default function Hero({ isDarkMode }: HeroProps) {
     return () => clearInterval(logTimer);
   }, []);
 
+  // Tracking Scroll for Indicator Fading
+  useEffect(() => {
+    const handleScroll = () => {
+      const opacity = Math.max(0, 1 - window.scrollY / 400);
+      setScrollOpacity(opacity);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   // Mouse Movement handlers for Parallax & Spotlight Follower
   const handleHeroMouseMove = (e: React.MouseEvent) => {
     setMouseCoords({ x: e.clientX, y: e.clientY });
-
+    
     if (heroRef.current) {
       const rect = heroRef.current.getBoundingClientRect();
       const xRatio = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 to 0.5
       const yRatio = (e.clientY - rect.top) / rect.height - 0.5; // -0.5 to 0.5
-
+      
       // Calculate scene rotation angles
       setSceneRotation({
         x: xRatio * 28, // horizontal tilt
@@ -227,11 +240,11 @@ export default function Hero({ isDarkMode }: HeroProps) {
       onMouseMove={handleHeroMouseMove}
       onMouseEnter={() => setIsMouseInHero(true)}
       onMouseLeave={handleHeroMouseLeave}
-      className={`relative h-[100dvh] min-h-0 flex flex-col overflow-hidden select-none pt-10 sm:pt-12 lg:pt-16 pb-0 transition-colors duration-300 ${
+      className={`relative h-screen min-h-[480px] flex flex-col justify-between overflow-hidden select-none pt-20 sm:pt-28 pb-4 sm:pb-6 transition-colors duration-300 hero-section ${
         isDarkMode ? "bg-[#050505] text-white" : "bg-slate-50 text-slate-900"
       }`}
     >
-
+      
       {/* 1. Cinematic Background Layer: Canvas Grid & Ribbon Waves */}
       <HeroMovingBackground isDarkMode={isDarkMode} />
 
@@ -242,22 +255,22 @@ export default function Hero({ isDarkMode }: HeroProps) {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full filter blur-[220px] bg-cyan-950/10" />
       </div>
 
-      {/* 3. Mouse follow Spotlight Effect (desktop only — avoids odd fixed-position artifacts on touch) */}
+      {/* 3. Mouse follow Spotlight Effect */}
       {isMouseInHero && (
         <motion.div
           animate={{ x: mouseCoords.x - 180, y: mouseCoords.y - 180 }}
           transition={{ type: "spring", stiffness: 180, damping: 25, mass: 0.1 }}
-          className="hidden lg:block fixed top-0 left-0 w-[360px] h-[360px] rounded-full bg-indigo-500/5 filter blur-[60px] pointer-events-none z-10 mix-blend-screen"
+          className="fixed top-0 left-0 w-[360px] h-[360px] rounded-full bg-indigo-500/5 filter blur-[60px] pointer-events-none z-10 mix-blend-screen"
         />
       )}
 
-      {/* 4. Main Contents Split Grid — this block owns all remaining height */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full flex-1 min-h-0 flex items-center">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 lg:gap-12 items-center w-full h-full lg:h-auto">
-
+      {/* 4. Main Contents Split Grid */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full flex-grow flex items-center py-4 lg:py-0 hero-container">
+        <div className="flex flex-col md:grid md:grid-cols-12 gap-6 md:gap-12 items-center w-full justify-between md:justify-center">
+          
           {/* ==================== LEFT SIDE: STORYTELLING ==================== */}
-          <div className="lg:col-span-6 flex flex-col justify-center text-left space-y-3 sm:space-y-4 lg:space-y-6 lg:pr-6 min-h-0 w-full">
-
+          <div className="md:col-span-6 flex flex-col justify-center text-left space-y-4 md:space-y-6 md:pr-4 lg:pr-6 hero-left-col">
+            
             {/* Glowing Availability Badge */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
@@ -265,23 +278,22 @@ export default function Hero({ isDarkMode }: HeroProps) {
               transition={{ duration: 0.5 }}
               className="inline-flex"
             >
-              <div className={`inline-flex items-center gap-2 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-[8px] sm:text-[9px] lg:text-xs font-mono font-black tracking-widest uppercase border animate-pulse flex-wrap justify-center sm:justify-start transition-all duration-300 ${
-                isDarkMode
-                  ? "bg-emerald-950/20 text-emerald-400 border-emerald-500/20 shadow-[0_0_15px_rgba(16,185,129,0.15)]"
+              <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[9px] sm:text-xs font-mono font-black tracking-widest uppercase border animate-pulse flex-wrap justify-center sm:justify-start transition-all duration-300 ${
+                isDarkMode 
+                  ? "bg-emerald-950/20 text-emerald-400 border-emerald-500/20 shadow-[0_0_15px_rgba(16,185,129,0.15)]" 
                   : "bg-emerald-50/90 text-emerald-700 border-emerald-200/80 shadow-[0_2px_8px_rgba(16,185,129,0.08)]"
               }`}>
                 <span className="flex h-2 w-2 rounded-full bg-emerald-500 relative flex-shrink-0">
                   <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
                 </span>
-                <span className="hidden sm:inline">AVAILABLE FOR SOFTWARE ENGINEERING OPPORTUNITIES</span>
-                <span className="sm:hidden">AVAILABLE FOR OPPORTUNITIES</span>
+                AVAILABLE FOR SOFTWARE ENGINEERING OPPORTUNITIES
               </div>
             </motion.div>
 
-            {/* Headline (Linear / visionOS Style Reveal) */}
+            {/* Enormous Animated Headline (Linear / visionOS Style Reveal) */}
             <div className="flex flex-col tracking-tighter leading-none select-none">
               {lines.map((line, idx) => (
-                <div key={idx} className="overflow-hidden py-0.5 sm:py-1">
+                <div key={idx} className="overflow-hidden py-1">
                   <motion.div
                     initial={{ y: "115%", filter: "blur(8px)", opacity: 0 }}
                     animate={{ y: 0, filter: "blur(0px)", opacity: 1 }}
@@ -290,9 +302,9 @@ export default function Hero({ isDarkMode }: HeroProps) {
                       delay: idx * 0.12,
                       ease: [0.16, 1, 0.3, 1] // modern expo-out curve
                     }}
-                    className={`text-2xl min-[360px]:text-3xl sm:text-5xl lg:text-7xl font-black uppercase break-words tracking-tight ${
-                      idx === 0 || idx >= 4
-                        ? "bg-gradient-to-r from-indigo-400 via-cyan-400 to-purple-500 bg-clip-text text-transparent"
+                    className={`text-3xl min-[360px]:text-4xl sm:text-6xl lg:text-7xl font-black uppercase break-words tracking-tight ${
+                      idx === 0 || idx === lines.length - 1 
+                        ? "bg-gradient-to-r from-indigo-400 via-cyan-400 to-purple-500 bg-clip-text text-transparent" 
                         : isDarkMode ? "text-white" : "text-slate-900"
                     }`}
                   >
@@ -307,22 +319,22 @@ export default function Hero({ isDarkMode }: HeroProps) {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.85 }}
-              className="space-y-1.5 sm:space-y-2 lg:space-y-4 max-w-xl"
+              className="space-y-4 max-w-xl hero-intro-card"
             >
-              <h3 className={`text-base sm:text-xl lg:text-2xl font-extrabold font-sans tracking-tight ${
+              <h3 className={`text-xl sm:text-2xl font-extrabold font-sans tracking-tight ${
                 isDarkMode ? "text-white" : "text-slate-900"
               }`}>
                 Full-Stack Software Engineer
               </h3>
-              <p className={`hidden sm:block text-sm lg:text-base leading-relaxed font-light font-sans line-clamp-3 lg:line-clamp-none ${
+              <p className={`text-xs sm:text-sm leading-relaxed font-light font-sans max-w-md ${
                 isDarkMode ? "text-slate-400" : "text-slate-600"
               }`}>
-                Passionate about transforming ideas into modern web applications and AI-powered products. I combine clean architecture, thoughtful design, and scalable engineering to create experiences that people genuinely enjoy using.
+                Passionate about transforming ideas into modern web applications. I combine clean architecture, thoughtful design, and scalable engineering.
               </p>
             </motion.div>
 
             {/* Rotating Title Core */}
-            <div className="h-7 sm:h-8 lg:h-10 flex items-center">
+            <div className="h-10 flex items-center pt-2 hero-role-badge">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={roleIdx}
@@ -330,101 +342,69 @@ export default function Hero({ isDarkMode }: HeroProps) {
                   animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
                   exit={{ y: -12, opacity: 0, filter: "blur(4px)" }}
                   transition={{ duration: 0.4, ease: "easeOut" }}
-                  className={`inline-flex items-center gap-2 px-2.5 py-1 rounded-xl border font-mono text-[10px] sm:text-xs lg:text-sm font-bold uppercase tracking-wider ${
-                    isDarkMode
-                      ? "border-indigo-500/10 bg-indigo-950/20 text-indigo-400"
+                  className={`inline-flex items-center gap-2.5 px-3 py-1 rounded-xl border font-mono text-xs sm:text-sm font-bold uppercase tracking-wider ${
+                    isDarkMode 
+                      ? "border-indigo-500/10 bg-indigo-950/20 text-indigo-400" 
                       : "border-indigo-200/50 bg-indigo-50/50 text-indigo-600"
                   }`}
                 >
-                  <Sparkles size={12} className="text-indigo-400 animate-spin" style={{ animationDuration: "5s" }} />
+                  <Sparkles size={14} className="text-indigo-400 animate-spin" style={{ animationDuration: "5s" }} />
                   {roles[roleIdx]}
                 </motion.div>
               </AnimatePresence>
             </div>
 
-            {/* Magnetic CTA Buttons Section — all three stay on one line */}
+            {/* Magnetic CTA Buttons Section */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1.1 }}
-              className="flex flex-nowrap items-center gap-1.5 sm:gap-2.5 lg:gap-4 pt-1 lg:pt-4 w-full"
+              className="flex flex-row flex-nowrap items-center gap-1.5 sm:gap-4 pt-4 overflow-x-auto no-scrollbar max-w-full pb-2 hero-cta-buttons"
             >
               <MagneticButton
                 id="cta-explore-work"
                 href="#projects"
-                className="flex-1 sm:flex-none px-2.5 py-2 sm:px-5 sm:py-3 lg:px-6 lg:py-3.5 rounded-lg sm:rounded-xl text-[9px] sm:text-xs lg:text-sm font-bold uppercase tracking-wider bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white shadow-[0_0_20px_rgba(99,102,241,0.25)] border border-indigo-400/20 hover:shadow-indigo-500/40 whitespace-nowrap"
+                className="px-2.5 min-[360px]:px-4 sm:px-6 py-2 sm:py-3.5 rounded-xl text-[10px] min-[360px]:text-xs sm:text-sm font-bold uppercase tracking-wider bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white shadow-[0_0_20px_rgba(99,102,241,0.25)] border border-indigo-400/20 hover:shadow-indigo-500/40 whitespace-nowrap flex-shrink-0"
               >
-                <span className="sm:hidden">Work</span>
-                <span className="hidden sm:inline">Explore My Work</span>
-                <ArrowRight size={14} className="hidden sm:inline text-white group-hover:translate-x-1 transition-transform" />
+                My Work
+                <ArrowRight size={14} className="text-white group-hover:translate-x-1 transition-transform flex-shrink-0 hidden sm:inline-block ml-1" />
               </MagneticButton>
 
               <MagneticButton
                 id="cta-download-resume"
                 onClick={handleDownloadResume}
-                className={`flex-1 sm:flex-none px-2.5 py-2 sm:px-5 sm:py-3 lg:px-6 lg:py-3.5 rounded-lg sm:rounded-xl text-[9px] sm:text-xs lg:text-sm font-bold uppercase tracking-wider border shadow-md whitespace-nowrap ${
-                  isDarkMode
-                    ? "bg-white/[0.03] hover:bg-white/[0.08] text-white border-white/10 hover:border-white/20"
+                className={`px-2.5 min-[360px]:px-4 sm:px-6 py-2 sm:py-3.5 rounded-xl text-[10px] min-[360px]:text-xs sm:text-sm font-bold uppercase tracking-wider border shadow-md whitespace-nowrap flex-shrink-0 ${
+                  isDarkMode 
+                    ? "bg-white/[0.03] hover:bg-white/[0.08] text-white border-white/10 hover:border-white/20" 
                     : "bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-200 hover:border-slate-300"
                 }`}
               >
-                <FileText size={14} className={`hidden sm:inline ${isDarkMode ? "text-slate-400" : "text-slate-600"}`} />
-                <span className="sm:hidden">Resume</span>
-                <span className="hidden sm:inline">Download Resume</span>
+                <FileText size={14} className={`${isDarkMode ? "text-slate-400" : "text-slate-600"} flex-shrink-0 hidden sm:inline-block mr-1`} />
+                Resume
               </MagneticButton>
 
               <MagneticButton
                 id="cta-lets-connect"
                 href="#contact"
-                className={`flex-1 sm:flex-none px-2.5 py-2 sm:px-5 sm:py-3 lg:px-6 lg:py-3.5 rounded-lg sm:rounded-xl text-[9px] sm:text-xs lg:text-sm font-bold uppercase tracking-wider bg-transparent border shadow-sm whitespace-nowrap ${
-                  isDarkMode
-                    ? "text-indigo-400 hover:text-indigo-300 border-indigo-500/10 hover:border-indigo-500/25"
+                className={`px-2.5 min-[360px]:px-4 sm:px-6 py-2 sm:py-3.5 rounded-xl text-[10px] min-[360px]:text-xs sm:text-sm font-bold uppercase tracking-wider bg-transparent border shadow-sm whitespace-nowrap flex-shrink-0 ${
+                  isDarkMode 
+                    ? "text-indigo-400 hover:text-indigo-300 border-indigo-500/10 hover:border-indigo-500/25" 
                     : "text-indigo-600 hover:text-indigo-700 border-indigo-200/50 hover:border-indigo-300/50"
                 }`}
               >
-                <Mail size={14} className="hidden sm:inline" />
-                <span className="sm:hidden">Connect</span>
-                <span className="hidden sm:inline">Let's Connect</span>
+                <Mail size={14} className="flex-shrink-0 hidden sm:inline-block mr-1" />
+                Let's Connect
               </MagneticButton>
             </motion.div>
 
           </div>
 
           {/* ==================== RIGHT SIDE: FUTURE INTERACTIVE WORKSPACE ==================== */}
-          {/* Visible at every breakpoint now — a small static status card on mobile,
-              scaling up to the full floating-module 3D scene at lg+. */}
-          <div className="lg:col-span-6 flex items-center justify-center relative min-h-0 h-full lg:h-auto">
-
-            {/* ---- COMPACT CARD (below lg): small, single terminal panel only ---- */}
-            <div className="lg:hidden w-full max-w-[280px] sm:max-w-[320px] mx-auto border border-white/[0.08] bg-[#07070a]/90 backdrop-blur-xl rounded-xl shadow-[0_15px_35px_rgba(0,0,0,0.6)] overflow-hidden font-mono text-[9px] text-slate-300">
-              <div className="px-2.5 py-1.5 border-b border-white/[0.06] bg-white/[0.01] flex items-center justify-between">
-                <div className="flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500/80" />
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-500/80" />
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500/80" />
-                </div>
-                <span className="text-[7px] text-slate-500 font-bold uppercase tracking-wider">sharma_core.sh</span>
-                <Terminal size={10} className="text-indigo-400" />
-              </div>
-              <div className="p-2.5 space-y-1.5 text-left leading-relaxed">
-                <div className="flex items-center gap-1.5 text-emerald-400 font-bold">
-                  <Shield size={8} className="animate-pulse flex-shrink-0" />
-                  <span className="truncate">Security: Auth Guard [OK]</span>
-                </div>
-                <div className="flex items-start gap-1.5 text-cyan-400 bg-cyan-950/25 border border-cyan-500/25 p-1.5 rounded-lg text-[8px] animate-pulse">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-0.5 animate-ping flex-shrink-0" />
-                  <span className="truncate">{activeConsoleLog}</span>
-                </div>
-                <div className="pt-1 border-t border-white/[0.04] text-[7px] text-slate-500 flex items-center justify-between">
-                  <span>PORT: 3000</span>
-                  <span className="text-emerald-500">PING: 18ms</span>
-                </div>
-              </div>
-            </div>
-
-            {/* ---- FULL 3D PERSPECTIVE SCENE (lg and up only) ---- */}
-            <div className="hidden lg:flex relative w-full max-w-lg aspect-square items-center justify-center [perspective:1400px] scale-100 origin-center">
-
+          <div className="flex md:col-span-6 items-center justify-center relative min-h-0 py-0 overflow-visible w-full hero-right-col">
+            
+            {/* 3D Perspective Scene Container */}
+            <div className="relative w-full max-w-lg aspect-square flex items-center justify-center [perspective:1400px] scale-[0.68] min-[380px]:scale-[0.76] min-[440px]:scale-[0.86] sm:scale-[0.95] lg:scale-100 origin-center transition-transform duration-300 hero-3d-container">
+              
               <motion.div
                 style={{
                   rotateX: sceneRotation.y,
@@ -433,9 +413,9 @@ export default function Hero({ isDarkMode }: HeroProps) {
                 }}
                 className="relative w-full h-[400px] flex items-center justify-center transition-transform duration-300 ease-out"
               >
-
+                
                 {/* 3D BACKGROUND LAYER — Glowing wireframe circular nodes */}
-                <div
+                <div 
                   style={{ transform: "translateZ(-40px)", animationDuration: "120s" }}
                   className="absolute w-80 h-80 rounded-full border border-dashed border-white/[0.03] animate-spin flex items-center justify-center pointer-events-none"
                 >
@@ -477,7 +457,7 @@ export default function Hero({ isDarkMode }: HeroProps) {
                       <Cpu size={10} className="animate-spin" style={{ animationDuration: "3s" }} />
                       <span>API Gateway Status: Operational</span>
                     </div>
-
+                    
                     {/* Live cycling pipeline tracker line */}
                     <div className="flex items-start gap-1.5 text-cyan-400 bg-cyan-950/25 border border-cyan-500/25 p-2 rounded-lg text-[9px] animate-pulse">
                       <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-1 animate-ping" />
@@ -517,11 +497,11 @@ export default function Hero({ isDarkMode }: HeroProps) {
 
                       {/* Input nodes */}
                       <circle cx="20" cy="30" r="3" fill="#6366f1" />
-
+                      
                       {/* Hidden layer nodes */}
                       <circle cx="60" cy="15" r="3" fill="#a855f7" />
                       <circle cx="60" cy="45" r="3" fill="#a855f7" />
-
+                      
                       {/* Active Synapse fires */}
                       <circle cx="100" cy="15" r="3.5" fill="#22d3ee">
                         <animate attributeName="opacity" values="0.2;1;0.2" dur="2s" repeatCount="indefinite" />
@@ -566,8 +546,8 @@ export default function Hero({ isDarkMode }: HeroProps) {
                         "bg-emerald-400/90 border-emerald-300/10"
                       ];
                       return (
-                        <div
-                          key={cellIdx}
+                        <div 
+                          key={cellIdx} 
                           className={`w-[18px] h-[18px] rounded border ${colors[val]} transition-colors duration-500 relative`}
                         >
                           {/* Live commit pulsing dots randomly */}
@@ -596,7 +576,7 @@ export default function Hero({ isDarkMode }: HeroProps) {
                     <Layers size={10} className="text-purple-400" />
                     <span className="font-bold tracking-widest uppercase">System Layout</span>
                   </div>
-
+                  
                   {/* Nodes diagram */}
                   <div className="space-y-1.5 font-mono text-[8px]">
                     <div className="px-2 py-1 rounded bg-indigo-950/30 border border-indigo-500/20 text-indigo-300 flex items-center justify-between">
@@ -637,50 +617,17 @@ export default function Hero({ isDarkMode }: HeroProps) {
         </div>
       </div>
 
-      {/* ==================== BOTTOM AREA: HORIZONTAL FLOATING TECH STACK ==================== */}
-      {/* Keep this height small so the whole hero stays within one viewport */}
-      <div className="relative w-full z-20 flex-shrink-0 bg-[#050505]/60 border-t border-b border-white/[0.04] backdrop-blur-xl py-1.5 sm:py-2 lg:py-2.5 overflow-hidden">
-        {/* Mirror fades on edges */}
-        <div className="absolute inset-y-0 left-0 w-16 lg:w-24 bg-gradient-to-r from-[#050505] to-transparent z-10 pointer-events-none" />
-        <div className="absolute inset-y-0 right-0 w-16 lg:w-24 bg-gradient-to-l from-[#050505] to-transparent z-10 pointer-events-none" />
-
-        {/* Continuous sliding marquee with Framer Motion */}
-        <motion.div
-          animate={{ x: [0, "-33.333%"] }}
-          transition={{
-            ease: "linear",
-            duration: 22,
-            repeat: Infinity
-          }}
-          className="flex gap-5 lg:gap-8 whitespace-nowrap w-max"
-        >
-          {marqueeItems.map((tech, idx) => (
-            <div
-              key={idx}
-              className="px-3 py-1.5 lg:px-4.5 lg:py-2.5 rounded-xl border border-white/[0.05] bg-white/[0.01] hover:border-indigo-500/30 hover:bg-indigo-950/15 text-slate-300 font-mono text-[10px] lg:text-sm font-bold flex items-center gap-2 lg:gap-2.5 transition-all cursor-pointer group shadow-[0_0_15px_rgba(255,255,255,0.01)]"
-            >
-              <Code size={11} className="text-indigo-500 group-hover:rotate-12 transition-transform" />
-              <span>{tech}</span>
-            </div>
-          ))}
-        </motion.div>
-      </div>
-
       {/* ==================== BOTTOM SCROLL INDICATOR ==================== */}
-      {/* Desktop-only — on smaller screens every pixel of vertical space goes to content instead */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 1.2 }}
-        className="hidden lg:flex relative z-20 flex-shrink-0 py-1.5 flex-col items-center justify-center gap-1.5 text-center font-mono text-[9px] text-slate-500 tracking-[0.2em] uppercase cursor-pointer"
-
+      <motion.div 
+        style={{ opacity: scrollOpacity }}
+        className="relative z-20 py-6 flex flex-col items-center justify-center gap-1.5 text-center font-mono text-[9px] sm:text-[10px] text-slate-500 tracking-[0.2em] uppercase cursor-pointer hero-scroll-indicator"
         onClick={() => {
           const aboutSection = document.getElementById("about");
           if (aboutSection) aboutSection.scrollIntoView({ behavior: "smooth" });
         }}
       >
         {/* Animated glowing mouse icon */}
-        <div className="w-5 h-8 rounded-full border-2 border-slate-700 p-1 flex justify-center items-start shadow-inner bg-slate-950/20">
+        <div className="w-5 h-8.5 rounded-full border-2 border-slate-700 p-1 flex justify-center items-start shadow-inner bg-slate-950/20">
           <motion.div
             animate={{ y: [0, 8, 0], opacity: [1, 0.4, 1] }}
             transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
