@@ -135,7 +135,18 @@ export default function Contact({ isDarkMode }: ContactProps) {
   };
 
   return (
-    <section id="contact" className="py-20 relative overflow-hidden">
+    <section
+      id="contact"
+      className={`py-24 relative overflow-hidden transition-colors duration-300 ${
+        isDarkMode ? "bg-[#050505] text-white" : "bg-slate-50 text-slate-900"
+      }`}
+    >
+      {/* Cinematic Background Layer */}
+      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+        <div className="absolute top-1/4 left-1/4 w-[450px] h-[450px] rounded-full filter blur-[160px] bg-indigo-500/5 animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-[450px] h-[450px] rounded-full filter blur-[160px] bg-purple-500/5 animate-pulse delay-500" />
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Heading */}
         <div className="text-center max-w-3xl mx-auto mb-16">
