@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ArrowRight, Code, Brain, Layout, Zap, Sparkles } from "lucide-react";
 import { personalInfo } from "../data";
-import profileAvatar from "../assets/images/khushi_avatar_new_1783926606014.jpg";
+import profileAvatar from "../assets/images/p_image.png";
 
 interface IntroCinematicProps {
   isDarkMode: boolean;
