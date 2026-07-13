@@ -15,9 +15,9 @@ export default function Footer({ isDarkMode }: FooterProps) {
 
   return (
     <footer
-      className={`border-t py-12 transition-all duration-300 ${
+      className={`border-t py-12 transition-all duration-300 relative overflow-hidden ${
         isDarkMode
-          ? "bg-slate-950 border-slate-900 text-slate-400"
+          ? "bg-[#050505] border-slate-900 text-slate-400"
           : "bg-slate-50 border-slate-200 text-slate-600"
       }`}
     >
