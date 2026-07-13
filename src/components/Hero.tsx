@@ -256,7 +256,7 @@ export default function Hero({ isDarkMode }: HeroProps) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center w-full h-full lg:h-auto">
 
           {/* ==================== LEFT SIDE: STORYTELLING ==================== */}
-          <div className="lg:col-span-6 flex flex-col justify-center text-left space-y-3 sm:space-y-4 lg:space-y-6 lg:pr-6 min-h-0">
+          <div className="lg:col-span-6 flex flex-col justify-center text-left space-y-3 sm:space-y-4 lg:space-y-6 lg:pr-6 min-h-0 w-full">
 
             {/* Glowing Availability Badge */}
             <motion.div
@@ -368,8 +368,7 @@ export default function Hero({ isDarkMode }: HeroProps) {
                 }`}
               >
                 <FileText size={14} className={isDarkMode ? "text-slate-400" : "text-slate-600"} />
-                <span className="hidden min-[360px]:inline">Download Resume</span>
-                <span className="min-[360px]:hidden">Resume</span>
+                Download Resume
               </MagneticButton>
 
               <MagneticButton
@@ -391,38 +390,7 @@ export default function Hero({ isDarkMode }: HeroProps) {
           {/* ==================== RIGHT SIDE: FUTURE INTERACTIVE WORKSPACE ==================== */}
           {/* Simplified terminal-only card below md so mobile stays a single-focus, single-screen layout;
               the full floating-module scene (which needs real lateral room) only appears at lg+. */}
-          <div className="lg:col-span-6 flex items-center justify-center relative min-h-0 h-full lg:h-auto">
-
-            {/* ---- COMPACT MOBILE/TABLET CARD (below lg) ---- */}
-            <div className="lg:hidden w-full max-w-[360px] mx-auto border border-white/[0.08] bg-[#07070a]/90 backdrop-blur-xl rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.7)] overflow-hidden font-mono text-[10px] text-slate-300">
-              <div className="px-3 py-2 border-b border-white/[0.06] bg-white/[0.01] flex items-center justify-between">
-                <div className="flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-rose-500/80" />
-                  <span className="w-2 h-2 rounded-full bg-amber-500/80" />
-                  <span className="w-2 h-2 rounded-full bg-emerald-500/80" />
-                </div>
-                <span className="text-[8px] text-slate-500 font-bold uppercase tracking-wider">sharma_core.sh</span>
-                <Terminal size={11} className="text-indigo-400" />
-              </div>
-              <div className="p-3 space-y-2 text-left leading-relaxed">
-                <div className="flex items-center gap-1.5">
-                  <span className="text-indigo-500 font-bold">&gt;</span>
-                  <span className="text-slate-400 truncate">npm run build --mode=production</span>
-                </div>
-                <div className="flex items-center gap-1.5 text-emerald-400 font-bold">
-                  <Shield size={9} className="animate-pulse flex-shrink-0" />
-                  <span className="truncate">Security: Auth Guard [OK]</span>
-                </div>
-                <div className="flex items-start gap-1.5 text-cyan-400 bg-cyan-950/25 border border-cyan-500/25 p-1.5 rounded-lg text-[9px] animate-pulse">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-0.5 animate-ping flex-shrink-0" />
-                  <span className="truncate">{activeConsoleLog}</span>
-                </div>
-                <div className="pt-1.5 border-t border-white/[0.04] text-[8px] text-slate-500 flex items-center justify-between">
-                  <span>PORT: 3000</span>
-                  <span className="text-emerald-500">PING: 18ms</span>
-                </div>
-              </div>
-            </div>
+          <div className="hidden lg:flex lg:col-span-6 items-center justify-center relative min-h-0 h-full lg:h-auto">
 
             {/* ---- FULL 3D PERSPECTIVE SCENE (lg and up only) ---- */}
             <div className="hidden lg:flex relative w-full max-w-lg aspect-square items-center justify-center [perspective:1400px] scale-100 origin-center">
@@ -640,8 +608,8 @@ export default function Hero({ isDarkMode }: HeroProps) {
       </div>
 
       {/* ==================== BOTTOM AREA: HORIZONTAL FLOATING TECH STACK ==================== */}
-      {/* Hidden below sm to protect vertical space on phones; compact on tablet; full on lg+ */}
-      <div className="hidden sm:block relative w-full z-20 flex-shrink-0 bg-[#050505]/60 border-t border-b border-white/[0.04] backdrop-blur-xl py-2.5 lg:py-4 overflow-hidden">
+      {/* Compact on phones, roomier from sm up, full on lg+ */}
+      <div className="relative w-full z-20 flex-shrink-0 bg-[#050505]/60 border-t border-b border-white/[0.04] backdrop-blur-xl py-2 sm:py-2.5 lg:py-4 overflow-hidden">
         {/* Mirror fades on edges */}
         <div className="absolute inset-y-0 left-0 w-16 lg:w-24 bg-gradient-to-r from-[#050505] to-transparent z-10 pointer-events-none" />
         <div className="absolute inset-y-0 right-0 w-16 lg:w-24 bg-gradient-to-l from-[#050505] to-transparent z-10 pointer-events-none" />
